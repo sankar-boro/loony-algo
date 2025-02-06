@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "sorting_algorithms"
+name = "algos"
 version = "0.1.0"
