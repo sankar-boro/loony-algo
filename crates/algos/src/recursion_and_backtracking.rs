@@ -42,3 +42,89 @@ pub fn generate_parentheses(n: usize, open: usize, close: usize, current: String
         generate_parentheses(n, open, close + 1, format!("{})", current), result);
     }
 }
+
+
+
+// ### **N-Queens Problem**
+// The **N-Queens problem** is a classic combinatorial problem in which we must place **N queens on an N×N chessboard** such that:
+// 1. No two queens share the same **row**.
+// 2. No two queens share the same **column**.
+// 3. No two queens share the same **diagonal**.
+
+// The challenge is to find all possible solutions or just one valid configuration.
+// ### **Explanation of the Code**
+// 1. `solve_n_queens(n)`:  
+//    - Initializes an empty board.
+//    - Calls the `backtrack` function.
+
+// 2. `backtrack(row, n, board, solutions)`:  
+//    - If `row == n`, a valid solution is found, so we store it.
+//    - Otherwise, we try placing a queen in each column and recursively move to the next row.
+
+// 3. `is_valid(row, col, board)`:  
+//    - Checks if placing a queen at `(row, col)` is safe by ensuring:
+//      - No other queen is in the same column.
+//      - No other queen is on the same diagonals.
+
+// 4. `print_solutions(solutions, n)`:  
+//    - Prints the board configurations with 'Q' for queens and '.' for empty spaces.
+// ### **Time Complexity**
+// - **O(N!)** in the worst case since we try every possible queen placement.
+// - **Optimized with pruning** (validity checks) to avoid unnecessary recursion.
+pub fn solve_n_queens(n: usize) -> Vec<Vec<usize>> {
+    let mut solutions = Vec::new();
+    let mut board = vec![0; n]; // Board represented as an array where index = row, value = column
+    backtrack(0, n, &mut board, &mut solutions);
+    solutions
+}
+
+fn backtrack(row: usize, n: usize, board: &mut Vec<usize>, solutions: &mut Vec<Vec<usize>>) {
+    if row == n {
+        println!("************ row === size *************");
+        solutions.push(board.clone());
+        return;
+    }
+    
+    for col in 0..n {
+        println!("current_col: {}", col);
+        if is_valid(row, col, board) {
+            board[row] = col;
+            println!("{:?}\n",board);
+            
+            println!("new_backtrack. row: {}, col: {}", row + 1, col);
+            backtrack(row + 1, n, board, solutions);
+        }
+    }
+}
+
+// col gets reset on new backtrack
+fn is_valid(row: usize, col: usize, board: &Vec<usize>) -> bool {
+    println!("=========is_valid. row: {}, col: {}==============", row, col);
+    for prev_row in 0..row {
+        let prev_col = board[prev_row];
+        if prev_col == col {
+            println!("row_index: {}, prev_row: {}, prev_col: {}, col: {}.   Same column (|), return false", prev_row, prev_row, prev_col, col);
+            return  false;
+        } else if prev_row as isize - prev_col as isize == row as isize - col as isize {
+            println!("row_index: {}, prev_row: {}, prev_col: {}, col: {}.   Same diagonal (\\), return false", prev_row, prev_row, prev_col, col);
+            return false;
+        } else if prev_row as isize + prev_col as isize == row as isize + col as isize {
+            println!("row_index: {}, prev_row: {}, prev_col: {}, col: {}.   Same diagonal (/), return false", prev_row, prev_row, prev_col, col);
+            return false;
+        }
+    }
+    println!("return true");
+    true
+}
+
+pub fn print_solutions(solutions: &Vec<Vec<usize>>, n: usize) {
+    for solution in solutions {
+        for &col in solution {
+            let mut row = vec!['.'; n];
+            row[col] = 'Q';
+            println!("{}", row.iter().collect::<String>());
+        }
+        println!("\n---\n");
+    }
+}
+

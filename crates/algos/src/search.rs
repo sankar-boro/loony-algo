@@ -60,10 +60,9 @@ pub fn binary_search(arr: &[i32], target: i32, left__: Option<usize>, right__: O
     None
 }
 
-/// ### **Exponential Search Explanation**
-/// Exponential search is an algorithm for finding a target element in a sorted array. It works by first identifying a range where the element might be present and then performing a binary search within that range. This search method is particularly efficient for searching in **unbounded or infinite** sorted arrays.
-
-/// ---
+/// Exponential search is an algorithm for finding a target element in a sorted array. 
+/// It works by first identifying a range where the element might be present and then performing a binary search within that range. 
+/// This search method is particularly efficient for searching in **unbounded or infinite** sorted arrays.
 
 /// ### **Steps of Exponential Search**
 /// 1. **Find the Search Range**  
