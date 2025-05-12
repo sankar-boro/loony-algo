@@ -60,6 +60,23 @@ pub fn binary_search(arr: &[i32], target: i32, left__: Option<usize>, right__: O
     None
 }
 
+pub fn binary_search_test(arr: &[i32], target: i32, left__: Option<usize>, right__: Option<usize>) -> Option<usize> {
+    let mut left = 0;
+    let mut right = arr.len();
+
+    if left__.is_some() {
+        left = left__.unwrap() as usize;
+    }
+
+    if right__.is_some() {
+        right = right__.unwrap() as usize;
+    }
+    
+
+
+    None
+}
+
 /// Exponential search is an algorithm for finding a target element in a sorted array. 
 /// It works by first identifying a range where the element might be present and then performing a binary search within that range. 
 /// This search method is particularly efficient for searching in **unbounded or infinite** sorted arrays.
