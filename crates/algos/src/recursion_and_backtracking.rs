@@ -80,40 +80,36 @@ pub fn solve_n_queens(n: usize) -> Vec<Vec<usize>> {
 
 fn backtrack(row: usize, n: usize, board: &mut Vec<usize>, solutions: &mut Vec<Vec<usize>>) {
     if row == n {
-        println!("************ row === size *************");
         solutions.push(board.clone());
         return;
     }
     
     for col in 0..n {
-        println!("current_col: {}", col);
         if is_valid(row, col, board) {
             board[row] = col;
-            println!("{:?}\n",board);
-            
-            println!("new_backtrack. row: {}, col: {}", row + 1, col);
             backtrack(row + 1, n, board, solutions);
         }
     }
 }
 
-// col gets reset on new backtrack
 fn is_valid(row: usize, col: usize, board: &Vec<usize>) -> bool {
-    println!("=========is_valid. row: {}, col: {}==============", row, col);
     for prev_row in 0..row {
-        let prev_col = board[prev_row];
-        if prev_col == col {
-            println!("row_index: {}, prev_row: {}, prev_col: {}, col: {}.   Same column (|), return false", prev_row, prev_row, prev_col, col);
+        let row_col_value = board[prev_row];
+        if row_col_value == col {
             return  false;
-        } else if prev_row as isize - prev_col as isize == row as isize - col as isize {
-            println!("row_index: {}, prev_row: {}, prev_col: {}, col: {}.   Same diagonal (\\), return false", prev_row, prev_row, prev_col, col);
+        } else if prev_row as isize - row_col_value as isize == row as isize - col as isize {
             return false;
-        } else if prev_row as isize + prev_col as isize == row as isize + col as isize {
-            println!("row_index: {}, prev_row: {}, prev_col: {}, col: {}.   Same diagonal (/), return false", prev_row, prev_row, prev_col, col);
+        } else if prev_row as isize + row_col_value as isize == row as isize + col as isize {
             return false;
         }
+
+        // else if row_col_value as isize - col as isize == row as isize - prev_row as isize{
+        //     return false
+        // } else if col as isize - row_col_value as isize == row as isize - prev_row as isize {
+        //     return false
+        // }
+        
     }
-    println!("return true");
     true
 }
 
@@ -122,9 +118,6 @@ pub fn print_solutions(solutions: &Vec<Vec<usize>>, n: usize) {
         for &col in solution {
             let mut row = vec!['.'; n];
             row[col] = 'Q';
-            println!("{}", row.iter().collect::<String>());
         }
-        println!("\n---\n");
     }
 }
-

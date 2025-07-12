@@ -47,7 +47,9 @@ pub fn binary_search(arr: &[i32], target: i32, left__: Option<usize>, right__: O
     }
     
     while left < right {
+        // is a common pattern in binary search algorithms, and it's written this way for a specific reason: to prevent integer overflow.
         let mid = left + (right - left) / 2;
+
         if target == arr[mid] {
             return Some(mid);
         } else if target > arr[mid] {
@@ -56,23 +58,6 @@ pub fn binary_search(arr: &[i32], target: i32, left__: Option<usize>, right__: O
             right = mid;
         }
     }
-
-    None
-}
-
-pub fn binary_search_test(arr: &[i32], target: i32, left__: Option<usize>, right__: Option<usize>) -> Option<usize> {
-    let mut left = 0;
-    let mut right = arr.len();
-
-    if left__.is_some() {
-        left = left__.unwrap() as usize;
-    }
-
-    if right__.is_some() {
-        right = right__.unwrap() as usize;
-    }
-    
-
 
     None
 }
